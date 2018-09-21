@@ -4,7 +4,6 @@ exports.up = function(knex, Promise) {
       user.increments('id')
       user.string('username')
       user.string('password')
-      user.string('email')
   })
 };
 

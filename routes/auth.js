@@ -4,16 +4,18 @@ const bcrypt = require('bcryptjs')
 const db = require('../database-connection')
 
 router.post('/login', (req, res, next) => {
+    console.log(req.body.password)
     return db('stockmoji_users').where({username: req.body.username})
         .then(([user]) => {
             if(!user){
-                return res.status(404).send('no user found, bitch')
+                return res.sendStatus(404).json('no user found, bitch')
             }
             if(bcrypt.compareSync(req.body.password, user.password)){
                 req.session.userId = user.id
-                res.send(user)
-            } else  {
-                res.send('could not authenticate, bitch')
+                console.log(user.id)
+                res.json(user.id)
+            } else {
+                res.json('could not authenticate, bitch')
             }
         })
 })
@@ -22,11 +24,10 @@ router.post('/signup', (req, res, next) => {
     var hash = bcrypt.hashSync(req.body.password, 12); 
     const user = {
         username: req.body.username,
-        password: hash,
-        email: req.body.email
+        password: hash
     }
     return db('stockmoji_users').insert(user).returning('*')
-        .then((response) => console.log(response))
+        .then((response) => res.json(response))
 })
 
 module.exports = router

@@ -5,7 +5,7 @@ exports.seed = function(knex, Promise) {
     .then(function () {
       // Inserts seed entries
       return knex('stockmoji_users').insert([
-        {username: 'hello', password: 'howdy', email: 'poop@poop.com'}
+        {username: 'hello', password: 'howdy'}
       ]);
     });
 };
