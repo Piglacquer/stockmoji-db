@@ -9,11 +9,8 @@ router.get('/', (req, res, next) => {
 })
 
 router.post('/login', (req, res, next) => {
-    // console.log(req.body.password)
     return db('stockmoji_users').where({username: req.body.username})
         .then(([user]) => {
-            // console.log( 'initial session', req.session)
-            // console.log('user', user)
             if(!user){
                 return res.json({"msg": "no user found, bitch"}).sendStatus(404)
             }
