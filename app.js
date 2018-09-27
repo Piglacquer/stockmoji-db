@@ -3,31 +3,34 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const auth = require('./routes/auth')
 const morgan = require('morgan')
-const port = process.env.PORT || 3000
-const app = express()
 const session = require('express-session')
 const FileStore = require('session-file-store')(session);
+const port = process.env.PORT || 3000
+const app = express()
 
-app.use(cors())
+app.use(morgan('dev'))
+app.use(cors({origin: true, credentials: true}))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use(morgan('dev'))
 app.use(session({
-    secret: 'bquyqueajhbddc',
+    cookie: {expires: 360000},
+    name: 'hello',
+    secret: 'lkmadfdfsaklm',
     resave: true,
     saveUninitialized: true,
-    store: new FileStore({path: '/tmp/session'})
-  }))
+    store: new FileStore({path: '/tmp/session', maxAge: 100000})
+}))
 app.use('/auth', auth)
 
 app.get('/', (req, res, next) => {
+    console.log(req.session)
     res.send('you hit me')
 })
 
 app.use((req, res, next) => {
     //vanilla log of original url
     console.log(req.originalUrl)
-    res.status(404).send('NOT FOUND')
+    res.json('NOT FOUND').sendStatus(404)
 })
 
 app.use((error, req, res, next) => {
