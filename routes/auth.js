@@ -4,8 +4,10 @@ const bcrypt = require('bcryptjs')
 const db = require('../database-connection')
 
 router.get('/', (req, res, next) => {
-    console.log(req.session, '/auth')
-    res.json(req.session)
+    if (req.session.userId){
+        return res.json({"loggedIn": true})
+    }
+    return res.json({"loggedIn": false}) 
 })
 
 router.post('/login', (req, res, next) => {
@@ -33,6 +35,17 @@ router.post('/signup', (req, res, next) => {
     }
     return db('stockmoji_users').insert(user).returning('*')
         .then((response) => res.json(response))
+})
+
+router.get('/logout', (req, res, next) => {
+    console.log('logout', req.session)
+    if (req.session.userId){
+        return store.destroy(req.sessionID, () => {
+            console.log('hi')
+        })
+         
+    }
+    return res.json({"status": "not logged in"})
 })
 
 module.exports = router

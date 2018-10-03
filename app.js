@@ -22,10 +22,9 @@ app.use(session({
 }))
 app.use('/auth', auth)
 
-app.get('/', (req, res, next) => {
-    console.log(req.session)
-    res.send('you hit me')
-})
+// app.get('/', (req, res, next) => {
+//     res.json({"loggedIn": true})
+// })
 
 app.use((req, res, next) => {
     //vanilla log of original url
@@ -36,7 +35,7 @@ app.use((req, res, next) => {
 app.use((error, req, res, next) => {
     //last route, error is the first parameter, tells express that this is the error handler
     console.log(error)
-    res.status(500).send(error.message)
+    res.send(error.message).sendStatus(500)
 })
 
 app.listen(port, () => console.log(`listening on ${port}`))
