@@ -5,7 +5,7 @@ const db = require('../database-connection')
 
 router.get('/', (req, res, next) => {
     if (req.session.userId){
-        return res.json({"loggedIn": true})
+        return res.json({"userId": req.session.userId, "loggedIn": true})
     }
     return res.json({"loggedIn": false}) 
 })
@@ -38,12 +38,13 @@ router.post('/signup', (req, res, next) => {
 })
 
 router.get('/logout', (req, res, next) => {
-    console.log('logout', req.session)
     if (req.session.userId){
-        return store.destroy(req.sessionID, () => {
-            console.log('hi')
+        return req.session.destroy((err) => {
+            if(err){
+                return res.status(500).send({'error': err})
+            }
+            return res.send({'message': 'successfully logged out'})
         })
-         
     }
     return res.json({"status": "not logged in"})
 })
