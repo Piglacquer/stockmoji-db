@@ -26,7 +26,7 @@ router.post('/login', (req, res, next) => {
 })
 
 router.post('/signup', (req, res, next) => {
-    var hash = bcrypt.hashSync(req.body.password, 12); 
+    var hash = bcrypt.hashSync(req.body.password, 12)
     const user = {
         username: req.body.username,
         password: hash
