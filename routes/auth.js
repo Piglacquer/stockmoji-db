@@ -32,7 +32,8 @@ router.post('/signup', (req, res, next) => {
         password: hash
     }
     return db('stockmoji_users').insert(user).returning('*')
-        .then((response) => res.json(response))
+        .then(response => response[0])
+        .then(response => res.json(response))
 })
 
 router.get('/logout', (req, res, next) => {
