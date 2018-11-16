@@ -5,9 +5,9 @@ const db = require('../database-connection')
 
 router.get('/', (req, res, next) => {
     if (req.session.userId){
-        return res.json({"userId": req.session.userId, "loggedIn": true})
+        return res.status(200).json({"userId": req.session.userId, "loggedIn": true})
     }
-    return res.json({"loggedIn": false}) 
+    return res.status(404).json({"loggedIn": false}) 
 })
 
 router.post('/login', (req, res, next) => {
