@@ -2,6 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const auth = require('./routes/auth')
+const stocks = require('./routes/stocks')
 const morgan = require('morgan')
 const session = require('express-session')
 const FileStore = require('session-file-store')(session);
@@ -21,6 +22,7 @@ app.use(session({
     store: new FileStore({path: '/tmp/session', maxAge: 100000})
 }))
 app.use('/auth', auth)
+app.use('/stocks', stocks)
 
 // app.get('/', (req, res, next) => {
 //     res.json({"loggedIn": true})
