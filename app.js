@@ -26,12 +26,12 @@ app.use('/stocks', stocks)
 
 app.use((req, res, next) => {
   console.warn({ 'file not found': req.originalUrl })
-  res.json('NOT FOUND').sendStatus(404)
+  return res.json('NOT FOUND').sendStatus(404)
 })
 
 app.use((error, req, res, next) => {
   console.error(error)
-  res.status(403).send({ 'message': error.message })
+  return res.status(403).send({ 'message': error.message })
 })
 
 app.listen(port, () => console.log(`listening on ${port}`))
