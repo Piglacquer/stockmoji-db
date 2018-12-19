@@ -37,3 +37,11 @@ ___
 - You will need to create a postgresql database on your local machine, I use ```createdb stockmoji``` (stockmoji is the name of the database)
 - Once you've done that, you'll need to run your migrations using knex, ```knex migrate:latest```
 - It should all be ready to roll! Smash that ```npm start``` button and try it out!
+
+___
+
+## Other repositories in the project
+
+- [Stockmoji Front-end V1](https://github.com/Piglacquer/stockmoji-client)
+- [Stockmoji Front-end V2](https://github.com/Piglacquer/stockmoji-client-v2)
+- [Stockmoji API Server](https://github.com/Piglacquer/stockmoji-server-apis)
