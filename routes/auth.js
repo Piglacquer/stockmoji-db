@@ -25,9 +25,10 @@ router.post('/login', (req, res, next) => {
     .catch(next)
 })
 
-router.post('/signup', (req, res, next) => {
+router.post('/register', (req, res, next) => {
   var hash = bcrypt.hashSync(req.body.password, 12)
   const user = {
+    email: req.body.email,
     username: req.body.username,
     password: hash
   }
