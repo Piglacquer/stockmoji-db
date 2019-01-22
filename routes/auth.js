@@ -14,13 +14,13 @@ router.post('/login', (req, res, next) => {
   return db('stockmoji_users').where({ username: req.body.username })
     .then(([user]) => {
       if (!user) {
-        return Promise.reject(new Error('username or password are incorrect'))
+        return Promise.reject(new Error('Username or password are incorrect'))
       }
       if (bcrypt.compareSync(req.body.password, user.password)) {
         req.session.userId = user.id
         return res.json(req.session)
       }
-      return res.status(200).json({ 'loggedIn': 'Username or password incorrect' })
+      return Promise.reject(new Error('Username or password incorrect'))
     })
     .catch(next)
 })

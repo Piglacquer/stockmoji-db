@@ -26,7 +26,7 @@ app.use('/stocks', stocks)
 
 app.use((req, res, next) => {
   console.warn({ 'file not found': req.originalUrl })
-  return res.json('NOT FOUND').sendStatus(404)
+  return res.status(400).json('NOT FOUND')
 })
 
 app.use((error, req, res, next) => {
