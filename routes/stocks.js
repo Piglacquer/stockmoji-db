@@ -2,8 +2,8 @@ const express = require('express')
 const router = express.Router()
 const db = require('../database-connection')
 
-router.post('/stocks', (request, response, next) => {
-  response.send('hi')
+router.post('/:id', (req, res, next) => {
+  res.status(200).json({ 'message': 'hi' })
 })
 
 module.exports = router

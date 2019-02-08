@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcryptjs')
-const db = require('../database-connection')
+const queries = require('../queries/auth')
 
 router.get('/', (req, res, next) => {
   if (req.session.userId) {
@@ -11,7 +11,7 @@ router.get('/', (req, res, next) => {
 })
 
 router.post('/login', (req, res, next) => {
-  return db('stockmoji_users').where({ username: req.body.username })
+  return queries.loginUser(req.body.username)
     .then(([user]) => {
       if (!user) {
         return Promise.reject(new Error('Username or password are incorrect'))
@@ -32,7 +32,7 @@ router.post('/register', (req, res, next) => {
     username: req.body.username,
     password: hash
   }
-  return db('stockmoji_users').insert(user).returning('*')
+  return queries.createUser(user)
     .then(response => response[0])
     .then(response => res.json(response))
 })
@@ -47,6 +47,10 @@ router.get('/logout', (req, res, next) => {
     })
   }
   return res.json({ 'status': 'not logged in' })
+})
+
+router.get('/loginCheck', (req, res, next) => {
+  req.session.userId ? res.status(200).send({ loggedIn: true }) : res.status(404).send({ loggedIn: false })
 })
 
 module.exports = router
