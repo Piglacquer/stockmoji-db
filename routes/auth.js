@@ -50,7 +50,7 @@ router.get('/logout', (req, res, next) => {
 })
 
 router.get('/loginCheck', (req, res, next) => {
-  req.session.userId ? res.status(200).send({ loggedIn: true }) : res.status(404).send({ loggedIn: false })
+  req.session.userId ? res.status(200).send({ userId: req.session.userId }) : res.status(404).send({ loggedIn: false })
 })
 
 module.exports = router
